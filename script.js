@@ -1,20 +1,48 @@
 // Store all expenses
 let expenses = [];
+let budget = 0;
+
 
 // Get HTML elements
+
 const amountInput = document.getElementById("amount");
 const reasonInput = document.getElementById("reason");
 const categoryInput = document.getElementById("category");
 const dateInput = document.getElementById("date");
+
+const budgetInput = document.getElementById("budget");
+const setBudgetBtn = document.getElementById("setBudgetBtn");
 
 const addExpenseBtn = document.getElementById("addExpenseBtn");
 
 const expenseTableBody = document.getElementById("expenseTableBody");
 
 const spentDisplay = document.getElementById("spentDisplay");
+const budgetDisplay = document.getElementById("budgetDisplay");
+const remainingDisplay = document.getElementById("remainingDisplay");
+
+
 
 // Add Expense Button
 addExpenseBtn.addEventListener("click", addExpense);
+
+setBudgetBtn.addEventListener("click", function(){
+
+    budget = Number(budgetInput.value);
+
+    if(budget <= 0){
+        alert("Enter a valid budget");
+        return;
+    }
+
+    budgetDisplay.textContent = budget;
+
+    calculateSpent();
+
+    budgetInput.value = "";
+
+});
+
 
 // Function to add expense
 function addExpense() {
@@ -91,7 +119,6 @@ function deleteExpense(id) {
 
 }
 
-// Calculate Total Spent
 function calculateSpent() {
 
     let total = 0;
@@ -102,6 +129,9 @@ function calculateSpent() {
 
     spentDisplay.textContent = total;
 
+    let remaining = budget - total;
+
+    remainingDisplay.textContent = remaining;
 }
 
 // Clear input fields
